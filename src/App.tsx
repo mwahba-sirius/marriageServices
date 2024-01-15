@@ -1,25 +1,45 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useForm } from 'react-hook-form';
+import { FianceAddition, PersonType } from './steps/fianceAddition';
+import { Button, createMuiTheme } from '@mui/material';
+import { WitnessAddition } from './steps/witnessAddition';
+import { PreviousFianceModal } from './steps/previousFiance';
+import { ClientAddition } from './steps/clientAddition';
+import { Stepper } from './components/Stepper';
+import createCache from '@emotion/cache';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+
+import { prefixer } from 'stylis';
+import { CacheProvider } from '@emotion/react';
+import { MosadqaData } from './steps/MosadqaData';
+import { IStepRef } from './utils';
+import { Provider, useDispatch } from 'react-redux';
+import { marraigeSliceReducer, marriageSliceActions } from './store/marriageReducer';
+import { store } from './store';
+import { MarraigeService } from './services/marriageService';
+
+
+const theme = createMuiTheme({
+  direction: 'rtl',
+});
+
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
+});
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CacheProvider value={cacheRtl}>
+      <Provider store={store}>
+        <MarraigeService />
+      </Provider>
+    </CacheProvider>
   );
 }
 
