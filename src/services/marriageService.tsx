@@ -9,9 +9,11 @@ import { Stepper } from "../components/Stepper";
 import { RootState } from "../store";
 import { MosadqaData } from "../steps/MosadqaData";
 import { Religions } from "../constants";
+import { Attachment } from "../steps/attachment";
 
 export const MarraigeService = () => {
     const clientAdditionRef = useRef<IStepRef | null>(null);
+    const attachmentRef = useRef<IStepRef | null>(null);
     const husabdRef = useRef<IStepRef | null>(null);
     const wifeRef = useRef<IStepRef | null>(null);
     const witnessesRef = useRef<IStepRef | null>(null);
@@ -41,7 +43,13 @@ export const MarraigeService = () => {
                             return (await witnessesRef.current?.onNext((date) => dispatch(marriageSliceActions.setWitnesses(date.witnesses))) ?? true)
                         }
                     },
-                    { element: () => <MosadqaData husbandReligion={marriageSlice.husband?.religion ?? Religions.muslim} />, stepName: "بيانات المصادقه", onNext: async () => { return true } }
+                    { element: () => <MosadqaData husbandReligion={marriageSlice.husband?.religion ?? Religions.muslim} />, stepName: "بيانات المصادقه", onNext: async () => { return true } },
+                
+                    {
+                        element: () => <Attachment defaultValues={marriageSlice.client} ref={attachmentRef} />, stepName: "المرفقات", onNext: async () => {
+                            return (await attachmentRef.current?.onNext((date) => dispatch(marriageSliceActions.setClient(date))) ?? true)
+                        }
+                    },
                 ]
             } />
         </div>
