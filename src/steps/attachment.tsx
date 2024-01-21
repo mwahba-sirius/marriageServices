@@ -1,26 +1,17 @@
 import { useForm } from "react-hook-form";
-import { IClient } from "../models/client";
 import React, { useImperativeHandle, useState } from "react";
 import { IStepRef } from "../utils";
+import { IAttachment } from "../models/attachments";
 
-interface IClientAdditionProps {
-    defaultValues?: IClient;
+interface IAttachmentProps {
+    defaultValues?: IAttachment;
 }
-export const Attachment = React.forwardRef<IStepRef, IClientAdditionProps>((props, ref) => {
-
-
-    const form = useForm<IClient>({ defaultValues: props.defaultValues });
-    const providerType = form.watch("providerType");
-
-    useImperativeHandle(ref, () => ({
-        onNext: async (func) => {
-            func(form.getValues());
-            return true;
-        }
-    }))
-
-    const [filebase64, setFilesBase64] = useState<string>("")
-    const [filesbase64, setFileBase64] = useState<string>("")
+export const Attachment = React.forwardRef<IStepRef, IAttachmentProps>((props, ref) => {
+    const form = useForm<IAttachment>({ defaultValues: props.defaultValues });
+    const cardId = form.watch("cardId");
+    const photoPicture = form.watch("photoPicture");
+    const [cardPic, setFilesBase64] = useState<string>("")
+    const [personalPhoto, setFileBase64] = useState<string>("")
 
     function formSubmit(e: any) {
         e.preventDefault();
@@ -58,54 +49,51 @@ export const Attachment = React.forwardRef<IStepRef, IClientAdditionProps>((prop
 
 
     return (
-        <div className="App">
-            <div className="col-md-6">
-                اختر صوره شخصيه
+        <div>
+            <div className="col-3">
+                اختر الصوره الشخصيه
                 <form onSubmit={formSubmit}>
                     <input type="file" onChange={(e) => convertFile(e.target.files)} />
                     <hr />
-                    {filebase64 &&
+                    {cardPic &&
                         <>
-                            {(filebase64.indexOf("image/") > -1) &&
-                                <img src={filebase64} width={200} />}
+                            {(cardPic.indexOf("image/") > -1) &&
+                                <img src={cardPic} width={200} />}
 
-                            {(filebase64.indexOf("video/") > -1) &&
+                            {(cardPic.indexOf("video/") > -1) &&
                                 <video controls>
-                                    <source src={filebase64} />
+                                    <source src={cardPic} />
                                 </video>}
 
-                            {(filebase64.indexOf("audio/") > -1) &&
+                            {(cardPic.indexOf("audio/") > -1) &&
                                 <audio controls>
-                                    <source src={filebase64} />
+                                    <source src={cardPic} />
                                 </audio>}
                             <hr />
-                            <button>submit</button>
                         </>
                     }
                 </form>
             </div>
 
-            <div className=" col-md-6">
+            <div className=" col-3">
                 اختر البطاقه الشخصيه
                 <form onSubmit={formSubmit}>
                     <input type="file" onChange={(e) => convert(e.target.files)} />
                     <hr />
-                    {filesbase64 &&
+                    {personalPhoto &&
                         <>
-                            {(filesbase64.indexOf("image/") > -1) &&
-                                <img src={filesbase64} width={100} />}
+                            {(personalPhoto.indexOf("image/") > -1) &&
+                                <img src={personalPhoto} width={100} />}
 
-                            {(filesbase64.indexOf("video/") > -1) &&
+                            {(personalPhoto.indexOf("video/") > -1) &&
                                 <video controls>
-                                    <source src={filesbase64} />
+                                    <source src={personalPhoto} />
                                 </video>}
 
-                            {(filesbase64.indexOf("audio/") > -1) &&
+                            {(personalPhoto.indexOf("audio/") > -1) &&
                                 <audio controls>
-                                    <source src={filesbase64} />
+                                    <source src={personalPhoto} />
                                 </audio>}
-                            <hr />
-                            <button>submit</button>
                         </>
                     }
                 </form>

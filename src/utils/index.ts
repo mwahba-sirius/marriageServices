@@ -27,6 +27,7 @@ export const createPerson = (person: Partial<IPerson>): IPerson => ({
     phoneNumber :person.phoneNumber ?? "",
     gender :person.gender ?? "",
     socialStatus:person.socialStatus ?? "",
+    attachment: person.attachment ?? "",
     notes :person.notes ?? "",
     marriedBefore :person.marriedBefore ?? false,
 })

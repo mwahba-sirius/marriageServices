@@ -44,10 +44,10 @@ export const MarraigeService = () => {
                         }
                     },
                     { element: () => <MosadqaData husbandReligion={marriageSlice.husband?.religion ?? Religions.muslim} />, stepName: "بيانات المصادقه", onNext: async () => { return true } },
-                
+
                     {
-                        element: () => <Attachment defaultValues={marriageSlice.client} ref={attachmentRef} />, stepName: "المرفقات", onNext: async () => {
-                            return (await attachmentRef.current?.onNext((date) => dispatch(marriageSliceActions.setClient(date))) ?? true)
+                        element: () => <Attachment defaultValues={marriageSlice.attachment} ref={attachmentRef} />, stepName: "المرفقات", onNext: async () => {
+                            return (await attachmentRef.current?.onNext((date) => dispatch(marriageSliceActions.setAttachment(date))) ?? true)
                         }
                     },
                 ]
