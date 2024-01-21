@@ -28,6 +28,7 @@ export interface IPerson {
     socialStatus: string;
     notes : string;
     marriedBefore : boolean;
+    attachment: string
 }
 export interface IPreviousFiance {
     name : string;
