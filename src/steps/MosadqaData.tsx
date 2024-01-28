@@ -4,12 +4,17 @@ import { useForm } from "react-hook-form"
 import { IMosadqa } from "../models/mosadqa"
 import { Religions, WifeIncomeType, WifeIncomeTypeOptions, mosadqaOptions } from "../constants"
 
+export enum MosadqaMarriageType {
+    NewMarriage = "0",
+    ExistingMarriage = "1"
+}
 interface IMosadqaProps {
     husbandReligion: Religions;
+    marraigeType: MosadqaMarriageType;
 }
 
 export const MosadqaData = (props: IMosadqaProps) => {
-    const { husbandReligion } = props;
+    const { husbandReligion, marraigeType } = props;
     const form = useForm<IMosadqa>();
     const wifeIncomeType = form.watch("wifeIncomeType");
     return (<>
@@ -32,6 +37,19 @@ export const MosadqaData = (props: IMosadqaProps) => {
                     </Grid>
                     <Grid item xs={4}>
                         <TextField label="موخر صداق" control={form.control} name="sadaqLate" />
+                    </Grid>
+                </>
+            )}
+            {marraigeType === MosadqaMarriageType.ExistingMarriage && (
+                <>
+                    <Grid item xs={4}>
+                        <TextField label="عدد الاولاد" control={form.control} name="previousMarriageData.childrenNum"  type="number" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField label="كالثابت من" control={form.control} name="previousMarriageData.evidencedBy" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField label="تاريخ الزواج" control={form.control} name="previousMarriageData.marriageDate" type="date" />
                     </Grid>
                 </>
             )}

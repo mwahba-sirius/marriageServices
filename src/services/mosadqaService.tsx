@@ -1,3 +1,4 @@
+
 import { useRef } from "react";
 import { useDispatch, Provider, useSelector } from "react-redux";
 import { ClientAddition } from "../steps/clientAddition";
@@ -11,7 +12,7 @@ import { MosadqaData, MosadqaMarriageType } from "../steps/MosadqaData";
 import { Religions } from "../constants";
 import { Attachment } from "../steps/attachment";
 
-export const MarraigeService = () => {
+export const MosadqaService = () => {
     const clientAdditionRef = useRef<IStepRef | null>(null);
     const attachmentRef = useRef<IStepRef | null>(null);
     const husabdRef = useRef<IStepRef | null>(null);
@@ -21,7 +22,7 @@ export const MarraigeService = () => {
     const dispatch = useDispatch();
     return (
         <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "2rem", alignItems: "stretch" }}>
-            <Stepper serviceName="طلب توثيق عقد زواج" steps={
+            <Stepper serviceName="طلب مصادقة زواج" steps={
                 [
                     {
                         element: () => <ClientAddition defaultValues={marriageSlice.client} ref={clientAdditionRef} />, stepName: "معلومات العميل", onNext: async () => {
@@ -43,7 +44,7 @@ export const MarraigeService = () => {
                             return (await witnessesRef.current?.onNext((date) => dispatch(marriageSliceActions.setWitnesses(date.witnesses))) ?? true)
                         }
                     },
-                    { element: () => <MosadqaData marraigeType={MosadqaMarriageType.NewMarriage} husbandReligion={marriageSlice.husband?.religion ?? Religions.muslim} />, stepName: "بيانات المصادقه", onNext: async () => { return true } },
+                    { element: () => <MosadqaData marraigeType={MosadqaMarriageType.ExistingMarriage} husbandReligion={marriageSlice.husband?.religion ?? Religions.muslim} />, stepName: "بيانات المصادقه", onNext: async () => { return true } },
 
                     {
                         element: () => <Attachment defaultValues={marriageSlice.attachment} ref={attachmentRef} />, stepName: "المرفقات", onNext: async () => {

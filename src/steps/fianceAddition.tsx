@@ -10,6 +10,8 @@ import { AuthorizationTypeOptions, AuthorizationTypes, FemaleSocialStatusOptions
 import React from "react";
 import * as yup from "yup";
 import { IStepRef } from "../utils";
+import { useDispatch } from "react-redux";
+import { popupActions } from "../store/popupReducer";
 
 export enum PersonType {
     Male = 0,
@@ -32,10 +34,15 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
     const socialStatus = fianceForm.watch("socialStatus");
     const [openModal, setOpenModal] = useState(false);
     const [previousFiancees, setPreviousFiancees] = useState<IPreviousFiance[]>(props.defaultValues?.previousFiances ?? []);
+    const dispatch = useDispatch();
     useImperativeHandle(ref, () => ({
         onNext: async (func) => {
             if (! (await fianceForm.trigger()))
                 return false;
+            if(shouldPreviousFianceesExist(socialStatus as SocialStatusCodes) && previousFiancees.length === 0) {
+                dispatch(popupActions.showPopup(<>برجاء ادخال بيانات الزواجات السابقه</>)) 
+                return false;
+            }
             func({...fianceForm.getValues(),previousFiances : previousFiancees });
             return true;
         }
@@ -152,7 +159,7 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
                     </Grid>
                 )}
             </Grid>
-            <PreviousFianceModal gender="male" onClose={() => { setOpenModal(false) }} open={openModal} save={(pf) => { setPreviousFiancees(ppf => [...ppf, pf]) }} />
+            <PreviousFianceModal gender={gender === PersonType.Male ? "female" : "male"} onClose={() => { setOpenModal(false) }} open={openModal} save={(pf) => { setPreviousFiancees(ppf => [...ppf, pf]) }} />
         </>
     )
 });

@@ -14,5 +14,10 @@ export interface IMosadqa {
     marraigeRules : string;
     insuranceNumber : string;
     notes : string;
+    previousMarriageData? : {
+        childrenNum : number;
+        evidencedBy : string;
+        marriageDate : Date;
+    }
     wifeIncomeValue : string;
 }

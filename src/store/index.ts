@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { marraigeSliceReducer } from './marriageReducer'
+import { popupReducer } from './popupReducer'
 
 export const store = configureStore({
   reducer: {
-    marriage : marraigeSliceReducer
+    marriage : marraigeSliceReducer,
+    popup : popupReducer
   },
 })
 

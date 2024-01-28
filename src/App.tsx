@@ -1,25 +1,17 @@
-import React, { useRef } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { useForm } from 'react-hook-form';
-import { FianceAddition, PersonType } from './steps/fianceAddition';
 import { Button, createMuiTheme } from '@mui/material';
-import { WitnessAddition } from './steps/witnessAddition';
-import { PreviousFianceModal } from './steps/previousFiance';
-import { ClientAddition } from './steps/clientAddition';
-import { Stepper } from './components/Stepper';
 import createCache from '@emotion/cache';
 import rtlPlugin from 'stylis-plugin-rtl';
 
 
 import { prefixer } from 'stylis';
 import { CacheProvider } from '@emotion/react';
-import { MosadqaData } from './steps/MosadqaData';
-import { IStepRef } from './utils';
 import { Provider, useDispatch } from 'react-redux';
-import { marraigeSliceReducer, marriageSliceActions } from './store/marriageReducer';
 import { store } from './store';
 import { MarraigeService } from './services/marriageService';
+import { PopupSystem } from './components/popupSystem';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { MosadqaService } from './services/mosadqaService';
 
 
 const theme = createMuiTheme({
@@ -32,12 +24,26 @@ const cacheRtl = createCache({
 });
 
 
+const router = createBrowserRouter([
+  {
+    path: "/marriage",
+    element: <MarraigeService />,
+  },
+  {
+    path: "/mosadqa",
+    element: <MosadqaService />,
+  },
+]);
+
 
 function App() {
   return (
     <CacheProvider value={cacheRtl}>
       <Provider store={store}>
-        <MarraigeService />
+        <div style={{ width: "100%", height: "5rem", backgroundColor: "#E9F1FD" }} />
+        <RouterProvider router={router} />
+
+        <PopupSystem />
       </Provider>
     </CacheProvider>
   );

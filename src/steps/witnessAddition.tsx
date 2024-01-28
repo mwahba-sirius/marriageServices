@@ -6,6 +6,8 @@ import { WitnessData } from "./witnessData";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useImperativeHandle } from "react";
+import { useDispatch } from "react-redux";
+import { popupActions } from "../store/popupReducer";
 
 const validation = () => yup.object({
     witnesses: yup.array(yup.object({
@@ -21,10 +23,16 @@ interface IWitnessAddition {
 export const WitnessAddition = React.forwardRef<IStepRef,IWitnessAddition>((props, ref) => {
     const witnessesForm = useForm<{ witnesses: IPerson[] }>({ defaultValues: { witnesses: props.defaultValues }, resolver: yupResolver(validation()) as any, mode: "all" });
     const witnesess = witnessesForm.watch("witnesses");
+    const dispatch = useDispatch();
     useImperativeHandle(ref,() => ({
         onNext: async (func) => {
             if (! (await witnessesForm.trigger()))
                 return false;
+            if(witnesess.length < 3) {
+                
+                dispatch(popupActions.showPopup(<>برجاء ادخال بيانات 3 شهود علي الاقل</>)) 
+                return false;
+            }
             func(witnessesForm.getValues());
             return true;
         }
@@ -33,7 +41,7 @@ export const WitnessAddition = React.forwardRef<IStepRef,IWitnessAddition>((prop
     return (<div style={{ width: "100%" }}>
         <Button variant="outlined" onClick={() => {
             const prevWit = witnessesForm.getValues().witnesses;
-            witnessesForm.setValue("witnesses", [...prevWit, createPerson({ name: `شاهد ${prevWit.length}` })])
+            witnessesForm.setValue("witnesses", [...prevWit, createPerson({ name: `شاهد ${prevWit.length}`,gender : "male" })])
         }}>اضافة شاهد</Button>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             {witnesess.map((x, i) => {
