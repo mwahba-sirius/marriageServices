@@ -2,7 +2,7 @@ import { Control, FormState, UseFormRegister } from "react-hook-form"
 import { IPerson } from "../models/person"
 import { Grid } from "@mui/material";
 import { FieldName, XTextField as TextField } from "../components/TextField";
-import { AuthorizationTypeOptions } from "../constants";
+import { AuthorizationTypeOptions, CountriesOptions, ReligionOptions, Towns } from "../constants";
 
 interface IWitnessDataProps {
     control: Control<{ witnesses: IPerson[] }>;
@@ -30,12 +30,12 @@ export const WitnessData = (props: IWitnessDataProps) => {
 
             {/** ---------- ROW  ---------- */}
             <Grid item xs={4}>
-                <TextField type="select" placeholder="dsdsdsd" options={[{ label: "ذكر", value: "male" }, { label: "أنثي", value: "female" }]} label="النوع" control={control} name={`witnesses.${index}.gender`} /> </Grid>
+                <TextField type="select" placeholder="dsdsdsd" options={[{ label: "ذكر", value: "male" }, { label: "أنثي", value: "female" }]} disabled label="النوع" control={control} name={`witnesses.${index}.gender`} /> </Grid>
             <Grid item xs={4}>
-                <TextField label="الديانه" control={control} name={`witnesses.${index}.religion`} type="select" />
+                <TextField label="الديانه" control={control} name={`witnesses.${index}.religion`} type="select" options={ReligionOptions} />
             </Grid>
             <Grid item xs={4}>
-                <TextField label="الجنسيه" control={control} name={`witnesses.${index}.nationality`} type="select" />
+                <TextField label="الجنسيه" control={control} name={`witnesses.${index}.nationality`} type="select" options={CountriesOptions} />
             </Grid>
 
             {/** ---------- ROW  ---------- */}
@@ -59,13 +59,13 @@ export const WitnessData = (props: IWitnessDataProps) => {
 
             {/** ---------- ROW  ---------- */}
             <Grid item xs={4}>
-                <TextField label="تاريخ الاصدار" control={control} name={`witnesses.${index}.issuingDate`} />
+                <TextField label="تاريخ الاصدار" control={control} name={`witnesses.${index}.issuingDate`}  type="date" />
             </Grid>
             <Grid item xs={4}>
-                <TextField label="المحافظه" control={control} name={`witnesses.${index}.town`} />
+                <TextField label="المحافظه" control={control} name={`witnesses.${index}.town`} type="select" options={Towns} />
             </Grid>
             <Grid item xs={4}>
-                <TextField label="القسم" control={control} name={`witnesses.${index}.city`} />
+                <TextField label="القسم" control={control} name={`witnesses.${index}.city`} type="select" options={Towns} />
             </Grid>
 
             {/** ---------- ROW  ---------- */}

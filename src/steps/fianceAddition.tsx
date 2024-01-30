@@ -6,7 +6,7 @@ import { PreviousFianceModal } from "./previousFiance";
 import { useImperativeHandle, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { AuthorizationTypeOptions, AuthorizationTypes, FemaleSocialStatusOptions, MaleSocialStatusOptions, ReligionOptions, SocialStatusCodes, shouldPreviousFianceesExist } from "../constants";
+import { AuthorizationTypeOptions, AuthorizationTypes, CountriesOptions, FemaleSocialStatusOptions, MaleSocialStatusOptions, ReligionOptions, SocialStatusCodes, Towns, shouldPreviousFianceesExist } from "../constants";
 import React from "react";
 import * as yup from "yup";
 import { IStepRef } from "../utils";
@@ -19,7 +19,8 @@ export enum PersonType {
 }
 interface IFianceAdditionProps {
     gender: PersonType;
-    defaultValues? : IPerson & {previousFiances : IPreviousFiance[]};
+    defaultValues?: IPerson & { previousFiances: IPreviousFiance[] };
+    showPreviousFiances?: boolean;
 }
 const validation = () => yup.object({
     authorizationCredType: yup.string().required(),
@@ -29,7 +30,7 @@ const validation = () => yup.object({
 
 export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((props: IFianceAdditionProps, ref) => {
 
-    const { gender } = props;
+    const { gender, showPreviousFiances} = props;
     const fianceForm = useForm<IPerson>({ defaultValues: { gender: String(props.gender), authorizationCredType: AuthorizationTypes.ID, ...props.defaultValues }, resolver: yupResolver(validation()) as any, mode: "onChange" });
     const socialStatus = fianceForm.watch("socialStatus");
     const [openModal, setOpenModal] = useState(false);
@@ -37,13 +38,13 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
     const dispatch = useDispatch();
     useImperativeHandle(ref, () => ({
         onNext: async (func) => {
-            if (! (await fianceForm.trigger()))
+            if (!(await fianceForm.trigger()))
                 return false;
-            if(shouldPreviousFianceesExist(socialStatus as SocialStatusCodes) && previousFiancees.length === 0) {
-                dispatch(popupActions.showPopup(<>برجاء ادخال بيانات الزواجات السابقه</>)) 
+            if (shouldPreviousFianceesExist(socialStatus as SocialStatusCodes) && previousFiancees.length === 0) {
+                dispatch(popupActions.showPopup(<>برجاء ادخال بيانات الزواجات السابقه</>))
                 return false;
             }
-            func({...fianceForm.getValues(),previousFiances : previousFiancees });
+            func({ ...fianceForm.getValues(), previousFiances: previousFiancees });
             return true;
         }
     }))
@@ -79,7 +80,7 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
                     <TextField control={fianceForm.control} name="religion" label="الديانه" type="select" options={ReligionOptions} />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField control={fianceForm.control} name="nationality" label="الجنسيه" type="select" />
+                    <TextField control={fianceForm.control} name="nationality" label="الجنسيه" type="select"  options={CountriesOptions}/>
                 </Grid>
                 {/** ---------- ROW  ---------- */}
 
@@ -111,10 +112,10 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
                     <TextField control={fianceForm.control} name="issuingDate" label="تاريخ الاصدار" type="date" />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField control={fianceForm.control} name="town" label="المحافظه" type="select" />
+                    <TextField control={fianceForm.control} name="town" label="المحافظه" type="select" options={Towns} />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField control={fianceForm.control} name="city" label="القسم" type="select" />
+                    <TextField control={fianceForm.control} name="city" label="القسم" type="select" options={Towns} />
                 </Grid>
                 {/** ---------- ROW  ---------- */}
                 <Grid item xs={6}>
@@ -136,13 +137,15 @@ export const FianceAddition = React.forwardRef<IStepRef, IFianceAdditionProps>((
                     <TextField control={fianceForm.control} name="phoneNumber" label="رقم الهاتف" />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField control={fianceForm.control} name="socialStatus" label="الحاله الاجتماعه" type="select" options={gender === PersonType.Female ? FemaleSocialStatusOptions : MaleSocialStatusOptions} />
+                    {showPreviousFiances &&
+                        <TextField control={fianceForm.control} name="socialStatus" label="الحاله الاجتماعه" type="select" options={gender === PersonType.Female ? FemaleSocialStatusOptions : MaleSocialStatusOptions} />
+                    }
                 </Grid>
                 {/** ---------- ROW  ---------- */}
                 <Grid item xs={12}>
                     <TextField multiline rows={4} control={fianceForm.control} name="notes" label="الملاحظات" />
                 </Grid>
-                {shouldPreviousFianceesExist(socialStatus as SocialStatusCodes) && (
+                {shouldPreviousFianceesExist(socialStatus as SocialStatusCodes) && showPreviousFiances&& (
                     <Grid item xs={12}>
                         <div style={{ width: "100%", backgroundColor: "grey", fontSize: "2rem", color: "white", padding: "1rem", display: "flex", justifyContent: "space-between" }}>
                             <div>

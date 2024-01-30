@@ -12,6 +12,10 @@ import { MarraigeService } from './services/marriageService';
 import { PopupSystem } from './components/popupSystem';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { MosadqaService } from './services/mosadqaService';
+import { DivorceService } from './services/divorceService';
+import { RevisionService } from './services/revisionService';
+import { setLocale } from 'yup';
+import { HomeService } from './services/homeService';
 
 
 const theme = createMuiTheme({
@@ -23,6 +27,7 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
+setLocale({mixed: {required: "برجاء ادخال البيانات في الحقل"}})
 
 const router = createBrowserRouter([
   {
@@ -33,6 +38,15 @@ const router = createBrowserRouter([
     path: "/mosadqa",
     element: <MosadqaService />,
   },
+  {
+    path: "/divorce",
+    element: <DivorceService />,
+  },
+  {
+    path: "/revision",
+    element: <RevisionService/>,
+  },
+  {path : "/",element : <HomeService />}
 ]);
 
 

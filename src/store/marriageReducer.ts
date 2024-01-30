@@ -4,6 +4,8 @@ import { IClient } from '../models/client'
 import { IPerson, IPreviousFiance } from '../models/person';
 import { IMosadqa } from '../models/mosadqa';
 import { IAttachment } from '../models/attachments';
+import { IDivorceData } from '../models/divorcedata';
+import { IRevisionData } from '../models/revisiondata';
 
 // Define a type for the slice state
 export interface IMarriageState {
@@ -12,6 +14,8 @@ export interface IMarriageState {
     wife? : IPerson & {previousFiances : IPreviousFiance[]};
     witnesses : IPerson[];
     mosadqa?: IMosadqa;
+    divorce? : IDivorceData;
+    revision? : IRevisionData;
     attachment?: IAttachment;
 }
 
@@ -25,6 +29,9 @@ export const marriageSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    setRevisionData(state,payload : PayloadAction<IRevisionData>) {
+        state.revision = payload.payload;
+    },
     setClient(state,payload : PayloadAction<IClient>) {
         state.client = payload.payload;
     },
@@ -33,6 +40,9 @@ export const marriageSlice = createSlice({
     },
     setWife(state,payload : PayloadAction<IPerson & {previousFiances : IPreviousFiance[]}>) {
         state.wife= payload.payload;
+    },
+    setDivorceData(state,payload : PayloadAction<IDivorceData>) {
+        state.divorce = payload.payload;
     },
     setWitnesses(state,payload : PayloadAction<IPerson[]>) {
         state.witnesses = payload.payload;

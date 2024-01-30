@@ -29,12 +29,12 @@ export const MarraigeService = () => {
                         }
                     },
                     {
-                        element: () => <FianceAddition defaultValues={marriageSlice.husband} ref={husabdRef} key={1} gender={0} />, stepName: "اضافة زوج", onNext: async () => {
+                        element: () => <FianceAddition showPreviousFiances defaultValues={marriageSlice.husband} ref={husabdRef} key={1} gender={0} />, stepName: "اضافة زوج", onNext: async () => {
                             return (await husabdRef.current?.onNext((date) => dispatch(marriageSliceActions.setHusband(date))) ?? true)
                         }
                     },
                     {
-                        element: () => <FianceAddition defaultValues={marriageSlice.wife} ref={wifeRef} key={2} gender={1} />, stepName: "اضافة زوجه", onNext: async () => {
+                        element: () => <FianceAddition showPreviousFiances defaultValues={marriageSlice.wife} ref={wifeRef} key={2} gender={1} />, stepName: "اضافة زوجه", onNext: async () => {
                             return (await wifeRef.current?.onNext((date) => dispatch(marriageSliceActions.setWife(date))) ?? true)
                         }
                     },

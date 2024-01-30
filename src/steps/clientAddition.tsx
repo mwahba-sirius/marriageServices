@@ -5,6 +5,7 @@ import { IClient } from "../models/client";
 import React, { useImperativeHandle } from "react";
 import { IStepRef } from "../utils";
 import { Popup } from "../components/Popup";
+import { ApplicantType, ApplicantTypeOptions, AuthorizationTypeOptions, CountriesOptions, MarriageTypeOptions, ReligionOptions, Towns } from "../constants";
 
 interface IClientAdditionProps {
     defaultValues?: IClient;
@@ -14,6 +15,7 @@ export const ClientAddition = React.forwardRef<IStepRef, IClientAdditionProps>((
 
     const form = useForm<IClient>({ defaultValues: props.defaultValues });
     const providerType = form.watch("providerType");
+    const providerAuthorizedAs = form.watch("providerAuthorizedAs");
     useImperativeHandle(ref, () => ({
         onNext: async (func) => {
             func(form.getValues());
@@ -23,18 +25,16 @@ export const ClientAddition = React.forwardRef<IStepRef, IClientAdditionProps>((
     return (
         <>
             <Grid container rowSpacing={3} columnSpacing={3}>
-                <Grid item xs={12}>
-                    <TextField label="بيانات التوكيل" control={form.control} name="authorizationType" type="select" options={[{ label: "داخل البلاد", value: "داخل البلاج" }, { label: "خارج البلاد", value: "خارج البلاد" }]} />
+                <Grid item xs={4}>
+                    <TextField label="صفة مقدم المعامله" control={form.control} name="providerAuthorizedAs" type="select" options={ApplicantTypeOptions} />
                 </Grid>
+                {providerAuthorizedAs === ApplicantType.Attorney && (
+                    <Grid item xs={4}>
+                        <TextField label="بيانات التوكيل" control={form.control} name="authorizationType" type="select" options={MarriageTypeOptions} />
+                    </Grid>
+                )
+                }
                 {/** ---------- ROW  ---------- */}
-                <Grid item xs={4}>
-                    <TextField label="صفة مقدم المعامله" control={form.control} name="name" type="select" />
-
-                </Grid>
-                <Grid item xs={4}>
-                    <FieldName>نوع الشخصيه</FieldName>
-                    {providerType}
-                </Grid>
                 <Grid item xs={4}>
 
                 </Grid>
@@ -47,7 +47,7 @@ export const ClientAddition = React.forwardRef<IStepRef, IClientAdditionProps>((
                     <TextField label="تاريخ الميلاد" control={form.control} name="dob" type="date" />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label="محل الميلاد" control={form.control} name="placeOfBirth" />
+                    <TextField label="محل الميلاد" control={form.control} name="placeOfBirth" type="select" options={CountriesOptions} />
                 </Grid>
 
 
@@ -55,15 +55,15 @@ export const ClientAddition = React.forwardRef<IStepRef, IClientAdditionProps>((
                 <Grid item xs={4}>
                     <TextField type="select" placeholder="dsdsdsd" options={[{ label: "ذكر", value: "male" }, { label: "أنثي", value: "female" }]} label="النوع" control={form.control} name="gender" /> </Grid>
                 <Grid item xs={4}>
-                    <TextField label="الديانه" control={form.control} name="religion" type="select" />
+                    <TextField label="الديانه" control={form.control} name="religion" type="select" options={ReligionOptions} />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label="الجنسيه" control={form.control} name="nationality" />
+                    <TextField label="الجنسيه" control={form.control} name="nationality" type="select" options={CountriesOptions} />
                 </Grid>
 
                 {/** ---------- ROW  ---------- */}
                 <Grid item xs={4}>
-                    <TextField label="نوع الاثبات" control={form.control} name="authurizationCredType" />
+                    <TextField label="نوع الاثبات" control={form.control} name="authurizationCredType" type="select" options={AuthorizationTypeOptions} />
                 </Grid>
                 <Grid item xs={4}>
                     <TextField label="رقم الاثبات" control={form.control} name="authorizationNumber" />
@@ -74,13 +74,13 @@ export const ClientAddition = React.forwardRef<IStepRef, IClientAdditionProps>((
 
                 {/** ---------- ROW  ---------- */}
                 <Grid item xs={4}>
-                    <TextField label="تاريخ الاصدار" control={form.control} name="issuanceDate" />
+                    <TextField label="تاريخ الاصدار" control={form.control} name="issuanceDate" type="date" />
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label="المحافظه" control={form.control} name="town" />
+                    <TextField label="المحافظه" control={form.control} name="town" type="select" options={Towns}/>
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label="القسم" control={form.control} name="city" />
+                    <TextField label="القسم" control={form.control} name="city" type="select" options={Towns} />
                 </Grid>
 
                 {/** ---------- ROW  ---------- */}
