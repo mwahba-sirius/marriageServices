@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     element: <RevisionService/>,
   },
   {path : "/",element : <HomeService />}
-]);
+],{basename : process.env.PUBLIC_URL});
 
 
 function App() {
