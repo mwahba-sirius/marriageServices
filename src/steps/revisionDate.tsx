@@ -27,13 +27,13 @@ export const RevisionData = React.forwardRef<IStepRef, IRevisionDataProps>((prop
 
         <Grid container rowSpacing={3} columnSpacing={3}>
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="نوع الزواج" name="marriageData.marriageType" type="select" options={MarriageTypeOptions} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="مكتب التوثيق" name="marriageData.docOffice" type="select" options={Towns} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 {marriageType === MarriageType.inCountry && (
                     <TextField control={form.control} label="" name="marriageData.marriagePaperType" type="select" options={DivorcePaperTypes} />
                 )}
@@ -41,36 +41,36 @@ export const RevisionData = React.forwardRef<IStepRef, IRevisionDataProps>((prop
 
             {String(marriagePaperType) === String(DivorcePaperType.Machined) && (
                 <>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="السنه" name="marriageData.year" type="number" />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="الحرف" name="marriageData.letter" />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="المسلسل" name="marriageData.serial" />
                     </Grid>
                 </>
             )}
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="دخل بها" name="marriageData.hadSex" type="select" options={[{ label: "دخل بها", value: String(true) }, { label: "لم يدخل بها", value: String(false) }]} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="مؤخر الصداق" name="marriageData.lateMosadqa" />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="تاريخ الزواج" name="marriageData.marriageDate" />
             </Grid>
             {/* --------- DIVORCE DATA ------------------*/}
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="نوع الطلاق" name="divorceData.divorceType" type="select" options={MarriageTypeOptions} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField control={form.control} label="مكتب التوثيق" name="divorceData.docOffice" type="select" options={Towns} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 {divorceType === MarriageType.inCountry && (
                     <TextField control={form.control} label="" name="divorceData.divorcePaperType" type="select" options={DivorcePaperTypes} />
                 )}
@@ -78,13 +78,13 @@ export const RevisionData = React.forwardRef<IStepRef, IRevisionDataProps>((prop
 
             {String(divorcePaperType) === String(DivorcePaperType.Machined) && (
                 <>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="السنه" name="divorceData.year" type="number" />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="الحرف" name="divorceData.letter" />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <TextField control={form.control} label="المسلسل" name="divorceData.serial" />
                     </Grid>
                 </>

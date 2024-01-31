@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Hidden } from "@mui/material"
 import React, { ReactElement, useState } from "react"
 
 interface IStepperProps {
@@ -10,6 +10,7 @@ export const Stepper = (props: IStepperProps) => {
     const [currentStep, setCurrentStep] = useState(0);
     return (
         <>
+        <Hidden mdDown>
             <div style={{ marginInline: "1rem", width: "300px", borderRadius: "5px", height: "auto", backgroundColor: "#F1F1F1", display: "flex", flexDirection: "column" }}>
                 <div style={{ marginRight: "1rem", marginTop: "2rem" }}>
                     <div style={{ fontSize: "1.7rem", fontWeight: "bolder", marginBottom: "2rem" }}>
@@ -24,6 +25,7 @@ export const Stepper = (props: IStepperProps) => {
                     ))}
                 </div>
             </div>
+            </Hidden>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", width: "70%" }}>
 
                 <div style={{ backgroundColor: "white", padding: "3rem", width: "100%", border: "2px #EBF2FD solid" }}>

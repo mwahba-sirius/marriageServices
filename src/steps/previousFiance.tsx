@@ -38,24 +38,24 @@ export const PreviousFianceModal = (props: IPreviousFianceProps) => {
                 <Grid container paddingInline={4} paddingBottom={2} rowSpacing={3} columnSpacing={3}>
                     {gender === "female" ? (
                         <>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="name" label={"الاسم"} />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="status" label={"حالة الزواجه"} type="select" options={[{ label: "توفي عنه", value: "dead" }, { label: "طلقت منه", value: "divorced" }, { label: "لازالت في عصمته", value: "stillMarried" }]} />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="nationality" label="جنسية الزوجه" />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="childrenNum" label={"عدد الاطفال"} type="number" />
                             </Grid>
                             {(status === "dead" || status === "divorced") && (
                                 <>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <TextField control={form.control} name={status === "dead" ? "deathDate" : "divorceDate"} label={status === "dead" ? "تاريخ الوفاه" : "تاريخ الطلاق"} type="date" />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <TextField control={form.control} name="evidencedBy" label={"كالثابت عن"} />
                                     </Grid>
                                 </>
@@ -63,29 +63,29 @@ export const PreviousFianceModal = (props: IPreviousFianceProps) => {
                         </>
                     ) : (
                         <>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="name" label={"الاسم"} />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField control={form.control} name="status" label={"موقف الزوجه الحالي"} type="select" options={[{ label: "توفي عنه", value: "dead" }, { label: "طلقت منه", value: "divorced" }]} />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <FormControlLabel control={<Checkbox defaultChecked />} label="الزوج الحالي" />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <FormControlLabel control={<Checkbox defaultChecked />} label="دخل بها" />
                             </Grid>
                             {(status === "dead" || status === "divorced") && (
                                 <>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <TextField control={form.control} name={status === "dead" ? "deathDate" : "divorceDate"} label={status === "dead" ? "تاريخ الوفاه" : "تاريخ الطلاق"} type="date" />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <TextField control={form.control} name="evidencedBy" label={"كالثابت عن"} />
                                     </Grid>
                                 </>
                             )}
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <TextField multiline rows={4} control={form.control} name="address" label={"العنوان"} />
                             </Grid>
                         </>
