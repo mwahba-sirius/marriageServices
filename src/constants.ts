@@ -94,3 +94,6 @@ export const CountriesOptions =
     ["مصر","السعوديه","المغرب","اليمن","عمان","الأردن"].map((x) => ({ label: x, value: x }));
 
 export const shouldPreviousFianceesExist = (ss: SocialStatusCodes) => ss !== SocialStatusCodes.Virgin && !!ss;
+export const COLORS = {
+    Primary : "rgb(42, 113, 240)"
+}
