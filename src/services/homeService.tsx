@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 
@@ -31,13 +31,13 @@ const ServiceButton = ({ label, route }: { label: string, route?: string }) => {
 export const HomeService = () => {
     return (
         <div style={{ width: "100%", height: "90vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ border: "1px solid rgb(177 205 255)", width: "23%", padding: "3rem", display: "flex", alignItems: "center", flexDirection: "column" }}>
+            <Box sx={{width : {md : "23%",xs : "80%"}}} style={{ border: "1px solid rgb(177 205 255)",  padding: "3rem", display: "flex", alignItems: "center", flexDirection: "column" }}>
                 <div style={{ fontSize: "3rem", fontWeight: "bold", color: "#2A71F0", marginBottom: "4rem" }}>الخدمات</div>
                 <ServiceButton label="ادخال بيانات زواج" route="/marriage"/>
                 <ServiceButton label="ادخال بيانات طلاق" route="/divorce"/>
                 <ServiceButton label="ادخال بيانات مصادقه" route="/mosadqa"/>
                 <ServiceButton label="ادخال بيانات مراجعه" route="/revision"/>
-            </div>
+            </Box>
         </div>
     )
 }
